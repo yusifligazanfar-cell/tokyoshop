@@ -7,5 +7,10 @@
 	"assets": {
 		"directory": ".open-next/assets",
 		"binding": "ASSETS"
-	}
+	},
+	"routes": [
+		{ "pattern": "www.tokyoshop.az", "custom_domain": true },
+		{ "pattern": "tokyoshop.az", "custom_domain": true }
+	],
+	"workers_dev": true
 }
