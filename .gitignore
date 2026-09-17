@@ -39,3 +39,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# cloudflare & opennext
+.open-next/
+.wrangler/
+
+# temp scripts
+patch_*.js
+fix_*.js
+clean_*.js
+translate*.py
+make_modal_big.js
+update_*.js

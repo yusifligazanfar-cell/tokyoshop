@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "Standart çatdırılma (2-3 gün)",
+    "price": 5
+  },
+  {
+    "id": 2,
+    "name": "Ekspress çatdırılma (1 gün)",
+    "price": 10
+  },
+  {
+    "id": 3,
+    "name": "50 ₼ üzəri sifarişlər üçün (Pulsuz)",
+    "price": 0
+  },
+  {
+    "id": 1787776583595,
+    "name": "Sumqayita",
+    "price": 10
+  }
+]

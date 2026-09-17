@@ -1,0 +1,11 @@
+{
+  "name": "Tokyo Store",
+  "contactEmail": "hello@tokyostore.az",
+  "supportEmail": "support@tokyostore.az",
+  "phone": "+994 50 123 45 67",
+  "country": "Azərbaycan",
+  "city": "Bakı",
+  "address": "Nizami küçəsi 12",
+  "currency": "AZN",
+  "timezone": "Baku"
+}

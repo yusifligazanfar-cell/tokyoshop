@@ -1,0 +1,43 @@
+[
+  {
+    "id": "PRD-001",
+    "name": "THIS IS AZERBAIJAN STYLE",
+    "description": "salam necesen",
+    "status": "Aktiv",
+    "inventory": "70 \u0259d\u0259d",
+    "type": "Geyim",
+    "vendor": "Tokyo",
+    "price": "37 \u20bc",
+    "image": "/hoodie-red.png",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL",
+      "3XL"
+    ],
+    "colors": [
+      "Red",
+      "Charcoal"
+    ],
+    "inventoryMatrix": {
+      "XS_Red": 10,
+      "XS_Charcoal": 0,
+      "S_Red": 10,
+      "S_Charcoal": 0,
+      "M_Red": 10,
+      "M_Charcoal": 0,
+      "L_Red": 10,
+      "L_Charcoal": 0,
+      "XL_Red": 10,
+      "XL_Charcoal": 0,
+      "2XL_Red": 10,
+      "2XL_Charcoal": 0,
+      "3XL_Red": 10,
+      "3XL_Charcoal": 0
+    },
+    "placement": []
+  }
+]
