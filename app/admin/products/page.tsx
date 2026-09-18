@@ -4,12 +4,14 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { Filter, MoreHorizontal, Plus, Search, X, UploadCloud, ChevronDown } from "lucide-react";
 import { getProducts, addProduct as addProductAction, updateProduct as updateProductAction, deleteProduct, Product } from "@/app/actions";
+import { compressImage } from "@/lib/utils";
 
 export default function AdminProducts() {
   const [activeTab, setActiveTab] = useState("Bütün");
   const [searchQuery, setSearchQuery] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isCompressing, setIsCompressing] = useState(false);
   
   useEffect(() => {
     getProducts().then(fetchedProducts => {
@@ -35,16 +37,21 @@ export default function AdminProducts() {
   const profit = price - cost;
   const margin = price > 0 ? ((profit / price) * 100).toFixed(1) : 0;
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const files = Array.from(e.target.files);
-      files.forEach(file => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setImagesPreview(prev => [...prev, reader.result as string]);
-        };
-        reader.readAsDataURL(file);
-      });
+      setIsCompressing(true);
+      try {
+        for (const file of files) {
+          // 6MB+ və ya istənilən böyük şəkli avtomatik sıxışdırıb yüngül WebP formatına salır
+          const compressedBase64 = await compressImage(file, 1400, 0.82);
+          setImagesPreview(prev => [...prev, compressedBase64]);
+        }
+      } catch (err) {
+        console.error("Şəkil sıxışdırmada xəta:", err);
+      } finally {
+        setIsCompressing(false);
+      }
     }
   };
 
@@ -321,11 +328,25 @@ export default function AdminProducts() {
                     </div>
                   </div>
 
-                  {/* Media (Multiple Images) */}
+                  {/* Media (Multiple Images with Auto-Compression) */}
                   <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm space-y-3">
-                    <label className="block text-[14px] font-bold text-gray-900">Media</label>
-                    <p className="text-[12px] text-gray-500 mt-1">Yükləmək üçün sürükləyib buraxın (Drop media to upload).</p>
+                    <div className="flex items-center justify-between">
+                      <label className="block text-[14px] font-bold text-gray-900">Media (Şəkillər)</label>
+                      <span className="text-[11px] font-medium text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                        ⚡ Avtomatik Sıxışdırma Aktivdir (MB ➔ KB WebP)
+                      </span>
+                    </div>
+                    <p className="text-[12px] text-gray-500 mt-1">
+                      Şəkilləri seçin. Sistem 5-10 MB-lıq böyük şəkilləri avtomatik olaraq yüksək keyfiyyətli yüngül KB ölçüsünə salır.
+                    </p>
                     
+                    {isCompressing && (
+                      <div className="flex items-center gap-2 text-xs text-blue-600 bg-blue-50 p-2.5 rounded-lg border border-blue-100 animate-pulse">
+                        <div className="w-3.5 h-3.5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+                        <span>Şəkillər sıxışdırılır və optimallaşdırılır...</span>
+                      </div>
+                    )}
+
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-3">
                       {imagesPreview.map((src, index) => (
                         <div key={index} className="relative w-full aspect-square rounded-lg overflow-hidden border border-gray-200 group bg-gray-50">
